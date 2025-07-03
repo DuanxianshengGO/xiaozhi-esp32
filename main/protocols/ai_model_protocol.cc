@@ -1,6 +1,6 @@
 #include "ai_model_protocol.h"
-#include "../board.h"
-#include "../assets/lang_config.h"
+#include "board.h"
+#include "assets/lang_config.h"
 
 #include <esp_log.h>
 #include <cJSON.h>
