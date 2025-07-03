@@ -6,10 +6,12 @@
 #include "audio_codec.h"
 #include "mqtt_protocol.h"
 #include "websocket_protocol.h"
+#include "protocols/ai_model_protocol.h"
 #include "font_awesome_symbols.h"
 #include "iot/thing_manager.h"
 #include "assets/lang_config.h"
 #include "mcp_server.h"
+#include "ai_model_tools.h"
 #include "audio_debugger.h"
 
 #if CONFIG_USE_AUDIO_PROCESSOR
@@ -463,9 +465,16 @@ void Application::Start() {
     // Add MCP common tools before initializing the protocol
 #if CONFIG_IOT_PROTOCOL_MCP
     McpServer::GetInstance().AddCommonTools();
+    // Add AI model configuration tools
+    AIModelTools::RegisterTools();
 #endif
 
-    if (ota.HasMqttConfig()) {
+    // Check if we should use AI model protocol
+    AIModelProvider provider = AIModelAdapter::GetProviderFromConfig();
+    if (provider != AIModelProvider::kXiaozhi) {
+        ESP_LOGI(TAG, "Using AI model protocol for provider: %d", (int)provider);
+        protocol_ = std::make_unique<AIModelProtocol>();
+    } else if (ota.HasMqttConfig()) {
         protocol_ = std::make_unique<MqttProtocol>();
     } else if (ota.HasWebsocketConfig()) {
         protocol_ = std::make_unique<WebsocketProtocol>();
