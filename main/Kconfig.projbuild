@@ -6,6 +6,72 @@ config OTA_URL
     help
         The application will access this URL to check for new firmwares and server address.
 
+choice AI_MODEL_PROVIDER
+    prompt "AI Model Provider"
+    default AI_MODEL_PROVIDER_XIAOZHI
+    help
+        Select the AI model provider for voice interaction
+    config AI_MODEL_PROVIDER_XIAOZHI
+        bool "Xiaozhi Official Server"
+    config AI_MODEL_PROVIDER_OPENAI
+        bool "OpenAI (ChatGPT)"
+    config AI_MODEL_PROVIDER_GOOGLE
+        bool "Google (Gemini)"
+    config AI_MODEL_PROVIDER_ANTHROPIC
+        bool "Anthropic (Claude)"
+    config AI_MODEL_PROVIDER_CUSTOM
+        bool "Custom Server"
+endchoice
+
+config OPENAI_API_KEY
+    string "OpenAI API Key"
+    default ""
+    depends on AI_MODEL_PROVIDER_OPENAI
+    help
+        Your OpenAI API key for ChatGPT access
+
+config OPENAI_MODEL
+    string "OpenAI Model"
+    default "gpt-4o-realtime-preview"
+    depends on AI_MODEL_PROVIDER_OPENAI
+    help
+        OpenAI model to use (e.g., gpt-4o-realtime-preview, gpt-4o-mini)
+
+config GOOGLE_API_KEY
+    string "Google API Key"
+    default ""
+    depends on AI_MODEL_PROVIDER_GOOGLE
+    help
+        Your Google API key for Gemini access
+
+config GOOGLE_MODEL
+    string "Google Model"
+    default "gemini-2.0-flash-exp"
+    depends on AI_MODEL_PROVIDER_GOOGLE
+    help
+        Google model to use (e.g., gemini-2.0-flash-exp, gemini-1.5-pro)
+
+config ANTHROPIC_API_KEY
+    string "Anthropic API Key"
+    default ""
+    depends on AI_MODEL_PROVIDER_ANTHROPIC
+    help
+        Your Anthropic API key for Claude access
+
+config ANTHROPIC_MODEL
+    string "Anthropic Model"
+    default "claude-3-5-sonnet-20241022"
+    depends on AI_MODEL_PROVIDER_ANTHROPIC
+    help
+        Anthropic model to use (e.g., claude-3-5-sonnet-20241022, claude-3-haiku-20240307)
+
+config CUSTOM_SERVER_URL
+    string "Custom Server URL"
+    default ""
+    depends on AI_MODEL_PROVIDER_CUSTOM
+    help
+        Custom server URL for AI model access
+
 
 choice
     prompt "Default Language"
