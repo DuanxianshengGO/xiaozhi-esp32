@@ -36,6 +36,9 @@
 - 支持 ESP32-C3、ESP32-S3、ESP32-P4 芯片平台
 - 通过设备端 MCP 实现设备控制（音量、灯光、电机、GPIO 等）
 - 通过云端 MCP 扩展大模型能力（智能家居控制、PC桌面操作、知识搜索、邮件收发等）
+- **🆕 多AI模型支持**：支持 ChatGPT、Gemini、Claude 等主流大模型
+- **🆕 实时语音交互**：支持 OpenAI Realtime API 进行实时语音对话
+- **🆕 动态模型切换**：通过 MCP 工具动态配置和切换AI模型
 
 ## 硬件
 
@@ -129,9 +132,27 @@
 
 ## 大模型配置
 
+### 官方服务器配置
+
 如果你已经拥有一个的小智 AI 聊天机器人设备，并且已接入官方服务器，可以登录 [xiaozhi.me](https://xiaozhi.me) 控制台进行配置。
 
 👉 [后台操作视频教程（旧版界面）](https://www.bilibili.com/video/BV1jUCUY2EKM/)
+
+### 多AI模型支持 🆕
+
+现在支持多种主流大语言模型，包括：
+
+- **OpenAI ChatGPT**: 支持 GPT-4o Realtime API 实时语音交互
+- **Google Gemini**: 支持 Gemini 2.0 Flash 等模型
+- **Anthropic Claude**: 支持 Claude 3.5 Sonnet 等模型
+- **自定义服务器**: 支持自定义实现的AI服务器
+
+#### 配置方法
+
+1. **编译时配置**: 通过 `idf.py menuconfig` 选择AI模型提供商
+2. **运行时配置**: 通过MCP工具动态切换模型
+
+详细配置指南请参考：👉 [AI模型配置文档](docs/ai-model-configuration.md)
 
 ## 相关开源项目
 
